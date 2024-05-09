@@ -1,35 +1,32 @@
-import React, { useState, useEffect, useReducer } from "react";
-import Card from "../UI/Card/Card";
-import classes from "./Login.module.css";
-import Button from "../UI/Button/Button";
+import React, { useState, useEffect, useReducer } from 'react';
+import Card from '../UI/Card/Card';
+import classes from './Login.module.css';
+import Button from '../UI/Button/Button';
 
 const emailReducer = (state, action) => {
-  if (action.type === "USER_INPUT") {
-    return { value: action.val, isValid: action.val.includes("@") };
+  if (action.type === 'USER_INPUT') {
+    return { value: action.val, isValid: action.val.includes('@') };
   }
-  if (action.type === "INPUT_BLUR") {
-    return { value: state.value, isValid: state.value.includes("@") };
+  if (action.type === 'INPUT_BLUR') {
+    return { value: state.value, isValid: state.value.includes('@') };
   }
 };
 
 const Login = (props) => {
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [enteredCollege, setEnteredCollege] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState('');
+  const [enteredCollege, setEnteredCollege] = useState('');
   const [formIsValid, setFormIsValid] = useState(false);
-  const [emailState, dispatchEmail] = useReducer(emailReducer, {
-    value: "",
-    isValid: false,
-  });
+  const [emailState, dispatchEmail] = useReducer(emailReducer, { value: '', isValid: false });
 
   useEffect(() => {
-    console.log("EFFECT RUNNING");
+    console.log('EFFECT RUNNING');
     return () => {
-      console.log("EFFECT CLEANUP");
+      console.log('EFFECT CLEANUP');
     };
   }, []);
 
   const emailChangeHandler = (event) => {
-    dispatchEmail({ type: "USER_INPUT", val: event.target.value });
+    dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
     setFormIsValid(emailState.isValid && enteredPassword.trim().length > 6);
   };
 
@@ -39,7 +36,7 @@ const Login = (props) => {
   };
 
   const validateEmailHandler = () => {
-    dispatchEmail({ type: "INPUT_BLUR" });
+    dispatchEmail({ type: 'INPUT_BLUR' });
   };
 
   const collegeChangeHandler = (event) => {
@@ -54,11 +51,7 @@ const Login = (props) => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            !emailState.isValid && classes.invalid
-          }`}
-        >
+        <div className={`${classes.control} ${!emailState.isValid && classes.invalid}`}>
           <label htmlFor="email">E-Mail</label>
           <input
             type="email"
